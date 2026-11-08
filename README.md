@@ -20,11 +20,18 @@ skills/
 
 Copy a skill folder into your assistant's skills directory (for Claude Code: `~/.claude/skills/` or a project's `.claude/skills/`), then invoke it by name or let the assistant pick it up from its description.
 
+## Skills
+
+| Skill | What it does |
+| --- | --- |
+| [commit-message](skills/commit-message/SKILL.md) | Writes a clear git commit message for staged changes |
+
 ## Contributing
 
-1. Add a new folder under `skills/`.
-2. Write a clear `SKILL.md` with a one-line description of when to use it.
-3. Open a pull request.
+1. Add a new folder under `skills/` (lowercase, hyphenated, e.g. `code-review`).
+2. Write a `SKILL.md` using the [template](skills/README.md#skillmd-template). Its `name` must match the folder name.
+3. Check it: `python scripts/validate_skills.py`
+4. Add it to the table above and open a pull request. CI runs the same check.
 
 ## License
 
