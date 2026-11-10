@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Reusable AI agent skills by Vash Fiery: code review, commit messages, debugging, PR descriptions, release notes, and the VashFX house style.">
+<title>AI Skills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a stack of compact bordered cards (0px card padding), each opened by a muted panel header. Theme: VashFX Ember (dark, 3D). */
+/* Dark-only by design: cards float above a deeper ground, lit from above. */
+:root {
+  --viz-bg: #0c0c0e;
+  --viz-card: #18181b;
+  --viz-card-top: #1f1f23;
+  --viz-panel: #26262b;
+  --viz-panel-top: #2e2e34;
+  --viz-border: #34343a;
+  --viz-text: #fafafa;
+  --viz-muted: #a1a1aa;
+  --viz-accent: #fb923c;
+  --viz-series-1: #fb923c;
+  --viz-series-2: #38bdf8;
+  --viz-series-3: #34d399;
+  --viz-series-4: #a78bfa;
+  --viz-series-5: #fb7185;
+  --viz-bevel-hi: rgba(255, 255, 255, 0.09);
+  --viz-bevel-lo: rgba(0, 0, 0, 0.55);
+  --viz-drop: rgba(0, 0, 0, 0.5);
+  --bevel: inset 0 1px 0 var(--viz-bevel-hi), inset 0 -1px 0 var(--viz-bevel-lo);
+  --lift: 0 1px 1px var(--viz-drop), 0 4px 10px -2px var(--viz-drop), 0 12px 24px -12px var(--viz-drop);
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --radius: 8px;
+  color-scheme: dark;
+}
+
+html { font-size: 14px; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--viz-bg); color: var(--viz-text);
+  font-family: var(--font); font-size: 1rem; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 40px 56px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr); gap: 16px; align-items: start; }
+.side, .main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.wrap > footer { grid-column: 1 / -1; }
+
+h1, h2, h3 { font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.25; }
+h1 { font-size: 1.9rem; letter-spacing: -0.02em; }
+h2 { font-size: 0.95rem; }
+h3 { font-size: 0.95rem; }
+p { margin: 0; }
+a { color: var(--viz-accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--viz-accent); outline-offset: 2px; }
+code, .mono { font-family: var(--mono); font-size: 0.88rem; }
+p code, h3 code { background: var(--viz-panel); border: 1px solid var(--viz-border); border-radius: 4px; padding: 0 0.3em; font-size: 0.85rem; box-shadow: var(--bevel); }
+
+/* Card: 0px padding; rows and panels inside carry their own */
+.card { border: 1px solid var(--viz-border); border-radius: var(--radius); overflow: hidden; background: linear-gradient(180deg, var(--viz-card-top), var(--viz-card) 120px); min-width: 0; box-shadow: var(--bevel), var(--lift); }
+.card-head { background: linear-gradient(180deg, var(--viz-panel-top), var(--viz-panel)); border-bottom: 1px solid var(--viz-bevel-lo); box-shadow: var(--bevel), 0 1px 0 var(--viz-bevel-hi); padding: 8px 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.card-head .meta { color: var(--viz-muted); font-family: var(--mono); font-size: 0.8rem; }
+.row { padding: 14px; }
+.row + .row { border-top: 1px solid var(--viz-border); }
+.muted { color: var(--viz-muted); }
+
+/* Intro card */
+.intro { display: flex; flex-direction: column; gap: 10px; }
+.intro .eyebrow { font-family: var(--mono); font-size: 0.8rem; color: var(--viz-accent); }
+.intro p { max-width: 64ch; color: var(--viz-muted); }
+.stats { display: grid; grid-template-columns: minmax(0, 1fr); }
+.side h1 { font-size: 1.6rem; }
+.stat { padding: 10px 14px; display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.stat + .stat { border-top: 1px solid var(--viz-border); }
+.stat .v { font-family: var(--mono); font-size: 1.35rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat .k { font-size: 0.8rem; color: var(--viz-muted); }
+.stat.s1 .v { color: var(--viz-series-1); }
+
+/* Skill tables */
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--viz-border); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 0.75rem; font-weight: 600; color: var(--viz-muted); text-transform: uppercase; letter-spacing: 0.06em; background: transparent; }
+td.name { font-family: var(--mono); font-weight: 500; white-space: nowrap; }
+td.path { font-family: var(--mono); font-size: 0.8rem; color: var(--viz-muted); white-space: nowrap; }
+td.desc { color: var(--viz-text); min-width: 260px; }
+
+/* Two-up cards */
+
+/* Code */
+pre { margin: 0; padding: 12px 14px; background: var(--viz-bg); box-shadow: inset 0 2px 4px var(--viz-bevel-lo); font-family: var(--mono); font-size: 0.86rem; line-height: 1.7; overflow-x: auto; }
+.tok-k { color: var(--viz-series-4); }
+.tok-s { color: var(--viz-series-3); }
+.tok-c { color: var(--viz-muted); font-style: italic; }
+.tok-p { color: var(--viz-series-2); }
+
+ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 1.8rem minmax(0, 1fr); gap: 6px; padding: 12px 14px; }
+ol.steps li + li { border-top: 1px solid var(--viz-border); }
+ol.steps li::before { content: counter(s); font-family: var(--mono); font-weight: 600; color: var(--viz-accent); font-variant-numeric: tabular-nums; }
+ol.steps li p { color: var(--viz-muted); margin-top: 2px; }
+
+.cmd { background: var(--viz-bg); box-shadow: inset 0 2px 4px var(--viz-bevel-lo); display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; }
+.cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; }
+button.copy { font: 500 0.8rem var(--font); color: var(--viz-text); background: linear-gradient(180deg, var(--viz-panel-top), var(--viz-panel)); border: 1px solid var(--viz-border); border-radius: 6px; padding: 5px 12px; cursor: pointer; flex-shrink: 0; box-shadow: var(--bevel), 0 2px 4px var(--viz-drop); transition: transform 0.08s; }
+button.copy:hover { border-color: var(--viz-accent); color: var(--viz-accent); }
+button.copy:active { background: var(--viz-card); box-shadow: inset 0 2px 3px var(--viz-bevel-lo); transform: translateY(1px); }
+
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--viz-muted); font-size: 0.85rem; padding-top: 8px; }
+
+@media (max-width: 600px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  .wrap { padding-block: 24px 40px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <aside class="side">
+    <section class="card" aria-labelledby="title">
+      <div class="card-head"><span class="mono">vash-fiery / AI-Skills</span><span class="meta">main</span></div>
+      <div class="row intro">
+        <h1 id="title">AI Skills</h1>
+        <p>Reusable instructions that teach an AI assistant to handle one kind of task the same way every time. Each skill is a folder with a <code>SKILL.md</code>: a name, a one-line description of when to use it, and the steps to follow.</p>
+      </div>
+      <div class="stats" style="border-top:1px solid var(--viz-border)">
+        <div class="stat s1"><span class="v">6</span><span class="k">Skills in skills/</span></div>
+        <div class="stat"><span class="v">MIT</span><span class="k">License</span></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="use">
+      <div class="card-head"><h2 id="use">Use a skill</h2><span class="meta">3 steps</span></div>
+      <ol class="steps">
+        <li><div><h3>Copy the folder</h3><p>Into <code>~/.claude/skills/</code> for every project, or a project's <code>.claude/skills/</code> for one.</p></div></li>
+        <li><div><h3>Start a new session</h3><p>Claude Code reads skills when a session starts.</p></div></li>
+        <li><div><h3>Invoke it</h3><p>Type <code>/skill-name</code>, or let the assistant pick it from its description.</p></div></li>
+      </ol>
+      <div class="cmd" style="border-top:1px solid var(--viz-border)">
+        <code id="clone-cmd"><span class="tok-p">git</span> clone https://github.com/vash-fiery/AI-Skills</code>
+        <button class="copy" type="button" id="copy-btn">Copy</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="contrib">
+      <div class="card-head"><h2 id="contrib">Add a skill</h2><span class="meta">CONTRIBUTING</span></div>
+      <ol class="steps">
+        <li><div><h3>Create a folder under <code>skills/</code></h3><p>Lowercase and hyphenated, for example <code>code-review</code>.</p></div></li>
+        <li><div><h3>Write the <code>SKILL.md</code></h3><p>The <code>name</code> in its frontmatter must match the folder name, and it needs a <code>description</code>.</p></div></li>
+        <li><div><h3>Run the check</h3><p><code>python scripts/validate_skills.py</code> confirms every skill is well-formed. CI runs the same check on each pull request.</p></div></li>
+        <li><div><h3>Open a pull request</h3><p>Add the skill to the README table. The PR template has a short checklist.</p></div></li>
+      </ol>
+    </section>
+  </aside>
+
+  <main class="main">
+    <section class="card" aria-labelledby="own">
+      <div class="card-head"><h2 id="own">The collection</h2><span class="meta">skills/</span></div>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Skill</th><th>What it does</th><th>File</th></tr></thead>
+          <tbody>
+            <tr><td class="name">code-review</td><td class="desc">Reviews a diff or pull request for correctness, security, and maintainability.</td><td class="path">skills/code-review/SKILL.md</td></tr>
+            <tr><td class="name">commit-message</td><td class="desc">Writes a git commit message for what is staged: a 50-character imperative subject and a body that explains why.</td><td class="path">skills/commit-message/SKILL.md</td></tr>
+            <tr><td class="name">debug</td><td class="desc">Finds the root cause of a bug, failing test, or error, fixes it, and verifies the fix.</td><td class="path">skills/debug/SKILL.md</td></tr>
+            <tr><td class="name">pr-description</td><td class="desc">Writes a pull request title and description from the branch's commits and diff.</td><td class="path">skills/pr-description/SKILL.md</td></tr>
+            <tr><td class="name">release-notes</td><td class="desc">Writes release notes or a changelog entry from commits and merged pull requests.</td><td class="path">skills/release-notes/SKILL.md</td></tr>
+            <tr><td class="name">vashfx-style</td><td class="desc">Applies the VashFX house style to Markdown docs, status reports, code examples, and styled HTML output.</td><td class="path">skills/vashfx-style/SKILL.md</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="layout">
+      <div class="card-head"><h2 id="layout">Skill layout</h2><span class="meta">SKILL.md</span></div>
+  <pre aria-label="Skill folder layout and SKILL.md frontmatter">skills/
+  &lt;skill-name&gt;/
+    SKILL.md      <span class="tok-c"># required</span>
+    references/   <span class="tok-c"># optional docs</span>
+    scripts/      <span class="tok-c"># optional helpers</span>
+
+  <span class="tok-c"># SKILL.md frontmatter</span>
+  ---
+  <span class="tok-k">name</span>: <span class="tok-s">skill-name</span>
+  <span class="tok-k">description</span>: <span class="tok-s">What it does and when
+  to use it.</span>
+  ---</pre>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/vash-fiery/AI-Skills">github.com/vash-fiery/AI-Skills</a>
+    <span>MIT License</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-btn');
+  var code = document.getElementById('clone-cmd');
+  btn.addEventListener('click', function () {
+    var text = code.textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(code);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; }, selectIt);
+    } catch (e) { selectIt(); }
+    setTimeout(function () { btn.textContent = 'Copy'; }, 1800);
+  });
+})();
+</script>
+</body>
+</html>

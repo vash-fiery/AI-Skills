@@ -27,7 +27,7 @@ The validator has no flags and always checks every skill. It prints `N skill(s) 
 
 1. Create or edit `skills/<name>/SKILL.md`.
 2. Run `python scripts/validate_skills.py`.
-3. Add or update the skill's row in the **Skills** table in the root `README.md`. Nothing checks this, so it is easy to forget.
+3. Add or update the skill's row in the **Skills** table in the root `README.md` and in the skills table in `docs/index.html` (the GitHub Pages site, styled with the VashFX Ember theme). Nothing checks either, so they are easy to forget.
 4. In the PR, use `.github/pull_request_template.md` ("What this adds" plus its checklist).
 
 Markdown in this repo follows the `vashfx-style` skill's "Repository Markdown" rules: compact native tables, inline code for commands and paths, language tags on code fences, and blank lines around block elements.
