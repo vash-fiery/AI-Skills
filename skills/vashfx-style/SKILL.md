@@ -19,6 +19,8 @@ description: Apply Vash Fiery's house style to documentation, reports, code exam
 
 Use these theme tokens consistently: `--viz-card`, `--viz-panel`, `--viz-border`, `--viz-text`, `--viz-muted`, and `--viz-series-*`. Keep tables and code as real text, never SVG or image-only replacements.
 
+For the token values (colors, fonts, and the raised and recessed 3D effect), use the VashFX Ember theme in [`references/theme.md`](references/theme.md).
+
 ## Repository Markdown
 
 GitHub controls colors, fonts, and padding, so keep Markdown plain:
