@@ -26,10 +26,10 @@ Copy a skill folder into your assistant's skills directory (for Claude Code: `~/
 
 | Skill | What it does |
 | --- | --- |
-| [commit-message](skills/commit-message/SKILL.md) | Writes a clear git commit message for staged changes |
+| [commit-message](skills/commit-message/SKILL.md) | Writes a clear git commit message for staged changes, and commits when asked |
 | [code-review](skills/code-review/SKILL.md) | Reviews a diff for correctness, security, and maintainability |
 | [debug](skills/debug/SKILL.md) | Finds a bug's root cause, fixes it, and verifies the fix |
-| [pr-description](skills/pr-description/SKILL.md) | Writes a pull request title and description from the branch |
+| [pr-description](skills/pr-description/SKILL.md) | Writes a pull request title and description from the branch, and opens the PR when asked |
 | [release-notes](skills/release-notes/SKILL.md) | Writes release notes or a changelog entry from commits and PRs |
 | [vashfx-style](skills/vashfx-style/SKILL.md) | Applies Vash Fiery's house style to docs, reports, and previews |
 

@@ -1,9 +1,11 @@
 ---
 name: vashfx-style
-description: Apply Vash Fiery's house style to documentation, reports, code examples, and rich previews. Use when writing Markdown docs, status reports, or styled HTML output for VashFX projects.
+description: Apply Vash Fiery's house style to Markdown docs, status reports, code examples, and styled HTML previews in VashFX projects. Use when writing any of these in a VashFX repo, or when the user asks for VashFX styling.
 ---
 
 # VashFX Style
+
+In VashFX projects, these rules take precedence over generic design or styling guidance.
 
 ## Rich output (HTML, previews, dashboards)
 
