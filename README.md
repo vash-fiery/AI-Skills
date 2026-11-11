@@ -2,7 +2,7 @@
 
 A curated collection of reusable AI agent skills, prompts, and workflows for Claude and other AI assistants.
 
-Browse them on the site: <https://vash-fiery.github.io/AI-Skills/> (source in [`docs/index.html`](docs/index.html)).
+Browse them on the site: <https://vash-fiery.github.io/AI-Skills/> (a React + shadcn/ui app in [`site/`](site/), built into [`docs/index.html`](docs/index.html)).
 
 ## What's a skill?
 
@@ -38,7 +38,13 @@ Copy a skill folder into your assistant's skills directory (for Claude Code: `~/
 1. Add a new folder under `skills/` (lowercase, hyphenated, e.g. `code-review`).
 2. Write a `SKILL.md` using the [template](skills/README.md#skillmd-template). Its `name` must match the folder name.
 3. Check it: `python scripts/validate_skills.py`
-4. Add it to the table above and to the skills table in `docs/index.html`, then open a pull request. CI runs the same check.
+4. Add it to the table above and to [`site/src/skills.ts`](site/src/skills.ts), then rebuild the site:
+
+   ```sh
+   cd site && pnpm install && pnpm run build:pages
+   ```
+
+5. Open a pull request. CI runs the same check.
 
 ## License
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A collection of reusable AI agent skills. Each skill is plain Markdown instructions, not application code. There is no build step and no package manager. The only code is the validator in `scripts/`.
+A collection of reusable AI agent skills. Each skill is plain Markdown instructions, not application code. There is no build step for the skills themselves. The only code is the validator in `scripts/` and the GitHub Pages site in `site/` (pnpm).
 
 ## Commands
 
@@ -27,7 +27,7 @@ The validator has no flags and always checks every skill. It prints `N skill(s) 
 
 1. Create or edit `skills/<name>/SKILL.md`.
 2. Run `python scripts/validate_skills.py`.
-3. Add or update the skill's row in the **Skills** table in the root `README.md` and in the skills table in `docs/index.html` (the GitHub Pages site, styled with the VashFX Ember theme). Nothing checks either, so they are easy to forget.
+3. Add or update the skill's row in the **Skills** table in the root `README.md` and in `site/src/skills.ts`, then run `cd site && pnpm install && pnpm run build:pages` to regenerate `docs/index.html` (the GitHub Pages site: React + shadcn/ui, VashFX Ember theme, bundled into one file). Never edit `docs/index.html` by hand. Nothing checks either step, so they are easy to forget.
 4. In the PR, use `.github/pull_request_template.md` ("What this adds" plus its checklist).
 
 Markdown in this repo follows the `vashfx-style` skill's "Repository Markdown" rules: compact native tables, inline code for commands and paths, language tags on code fences, and blank lines around block elements.

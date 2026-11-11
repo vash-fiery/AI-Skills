@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Layout: sidebar of intro + how-to cards beside a searchable skill index and a detail reader. Compact bordered cards, 0px card padding, muted panel headers. */
+/* Theme: VashFX Ember (dark-only by design, 3D bevel lit from above), from skills/vashfx-style/references/theme.md */
+@layer base {
+  :root {
+    /* Ember tokens */
+    --viz-bg: #0c0c0e;
+    --viz-card: #18181b;
+    --viz-card-top: #1f1f23;
+    --viz-panel: #26262b;
+    --viz-panel-top: #2e2e34;
+    --viz-border: #34343a;
+    --viz-text: #fafafa;
+    --viz-muted: #a1a1aa;
+    --viz-accent: #fb923c;
+    --viz-series-1: #fb923c;
+    --viz-series-2: #38bdf8;
+    --viz-series-3: #34d399;
+    --viz-series-4: #a78bfa;
+    --viz-series-5: #fb7185;
+    --viz-bevel-hi: rgba(255, 255, 255, 0.09);
+    --viz-bevel-lo: rgba(0, 0, 0, 0.55);
+    --viz-drop: rgba(0, 0, 0, 0.5);
+    --bevel: inset 0 1px 0 var(--viz-bevel-hi), inset 0 -1px 0 var(--viz-bevel-lo);
+    --lift: 0 1px 1px var(--viz-drop), 0 4px 10px -2px var(--viz-drop), 0 12px 24px -12px var(--viz-drop);
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+    /* shadcn tokens mapped to Ember */
+    --background: 240 8% 5%;
+    --foreground: 0 0% 98%;
+    --card: 240 6% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 27 96% 61%;
+    --primary-foreground: 240 8% 5%;
+    --secondary: 240 6% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 6% 16%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 6% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 351 95% 71%;
+    --destructive-foreground: 240 8% 5%;
+    --border: 240 5% 21%;
+    --input: 240 5% 21%;
+    --ring: 27 96% 61%;
+    --radius: 0.5rem;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { font-size: 14px; }
+  body {
+    background: var(--viz-bg);
+    color: var(--viz-text);
+    font-family: var(--font);
+    line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { outline: 2px solid var(--viz-accent); outline-offset: 2px; }
+}
+
+@layer components {
+  .ember-card {
+    border: 1px solid var(--viz-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-width: 0;
+    background: linear-gradient(180deg, var(--viz-card-top), var(--viz-card) 120px);
+    box-shadow: var(--bevel), var(--lift);
+  }
+  .ember-head {
+    background: linear-gradient(180deg, var(--viz-panel-top), var(--viz-panel));
+    border-bottom: 1px solid var(--viz-bevel-lo);
+    box-shadow: var(--bevel), 0 1px 0 var(--viz-bevel-hi);
+    padding: 8px 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .ember-well {
+    background: var(--viz-bg);
+    box-shadow: inset 0 2px 4px var(--viz-bevel-lo);
+  }
+  .ember-btn {
+    background: linear-gradient(180deg, var(--viz-panel-top), var(--viz-panel));
+    box-shadow: var(--bevel), 0 2px 4px var(--viz-drop);
+  }
+  .ember-btn:active { box-shadow: inset 0 2px 3px var(--viz-bevel-lo); transform: translateY(1px); }
+  .mono { font-family: var(--mono); }
+  .icode {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--viz-panel);
+    border: 1px solid var(--viz-border);
+    border-radius: 4px;
+    padding: 0 0.3em;
+    box-shadow: var(--bevel);
+    overflow-wrap: anywhere;
+  }
+  .tabnum { font-variant-numeric: tabular-nums; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
