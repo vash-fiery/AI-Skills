@@ -17,3 +17,32 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/validate_skills.py
+
+  site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Type-check
+        run: pnpm exec tsc -b
+      - name: Lint
+        run: pnpm run lint
+      - name: Build the Pages site
+        run: pnpm run build:pages
+      - name: Check docs/index.html is up to date
+        run: |
+          if ! git diff --quiet -- ../docs/index.html; then
+            echo "::error file=docs/index.html::docs/index.html is stale. Run 'cd site && pnpm run build:pages' and commit the result."
+            exit 1
+          fi

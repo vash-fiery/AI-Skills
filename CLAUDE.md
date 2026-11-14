@@ -9,10 +9,13 @@ A collection of reusable AI agent skills. Each skill is plain Markdown instructi
 ## Commands
 
 ```sh
-python scripts/validate_skills.py   # validate every skill; CI runs exactly this (Python 3.12)
+python scripts/validate_skills.py              # validate every skill (CI, Python 3.12)
+cd site && pnpm install && pnpm exec tsc -b     # type-check the site (CI)
+cd site && pnpm run lint                        # oxlint (CI)
+cd site && pnpm run build:pages                 # rebuild docs/index.html (CI fails if it is stale)
 ```
 
-The validator has no flags and always checks every skill. It prints `N skill(s) OK` or one `skills/<name>: <error>` line per problem, and exits 1 on failure.
+The validator has no flags and always checks every skill: frontmatter, broken relative links in `SKILL.md`, a row in the root `README.md` Skills table, and an entry in `site/src/skills.ts` whose `description` and `tools` match the frontmatter (`tools` mirrors the `Bash(...)` patterns in `allowed-tools`). It prints `N skill(s) OK` or one `skills/<name>: <error>` line per problem, and exits 1 on failure.
 
 ## Layout and conventions
 
@@ -27,7 +30,7 @@ The validator has no flags and always checks every skill. It prints `N skill(s) 
 
 1. Create or edit `skills/<name>/SKILL.md`.
 2. Run `python scripts/validate_skills.py`.
-3. Add or update the skill's row in the **Skills** table in the root `README.md` and in `site/src/skills.ts`, then run `cd site && pnpm install && pnpm run build:pages` to regenerate `docs/index.html` (the GitHub Pages site: React + shadcn/ui, VashFX Ember theme, bundled into one file). Never edit `docs/index.html` by hand. Nothing checks either step, so they are easy to forget.
+3. Add or update the skill's row in the **Skills** table in the root `README.md` and in `site/src/skills.ts`, then run `cd site && pnpm install && pnpm run build:pages` to regenerate `docs/index.html` (the GitHub Pages site: React + shadcn/ui, VashFX Ember theme, bundled into one file). Never edit `docs/index.html` by hand. The validator fails if the README row or `skills.ts` entry is missing or its description has drifted, and CI fails if `docs/index.html` is stale. The `summary`, `title`, `group`, and `blocks` in `skills.ts` are not checked, so keep the steps in `blocks` in sync with `SKILL.md` by hand.
 4. In the PR, use `.github/pull_request_template.md` ("What this adds" plus its checklist).
 
 Markdown in this repo follows the `vashfx-style` skill's "Repository Markdown" rules: compact native tables, inline code for commands and paths, language tags on code fences, and blank lines around block elements.

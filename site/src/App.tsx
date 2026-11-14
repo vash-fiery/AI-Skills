@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,13 +57,13 @@ function useCopy() {
 }
 
 function CopyCommand({ id, cmd, copied, onCopy }: { id: string; cmd: string; copied: boolean; onCopy: (el: HTMLElement | null) => void }) {
-  let codeEl: HTMLElement | null = null
+  const codeRef = useRef<HTMLElement>(null)
   return (
     <div className="ember-well flex items-center gap-2.5 py-2.5 pl-3.5 pr-2.5">
       <Terminal className="h-3.5 w-3.5 shrink-0 text-[color:var(--viz-muted)]" aria-hidden />
       <code
         id={id}
-        ref={(el) => (codeEl = el)}
+        ref={codeRef}
         className="mono min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-[0.86rem]"
       >
         {cmd}
@@ -72,7 +72,7 @@ function CopyCommand({ id, cmd, copied, onCopy }: { id: string; cmd: string; cop
         size="sm"
         variant="outline"
         className="ember-btn h-7 shrink-0 gap-1.5 px-3 text-xs hover:border-[color:var(--viz-accent)] hover:text-[color:var(--viz-accent)]"
-        onClick={() => onCopy(codeEl)}
+        onClick={() => onCopy(codeRef.current)}
         aria-label={`Copy command: ${cmd}`}
       >
         {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
