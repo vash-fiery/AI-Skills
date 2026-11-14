@@ -10,7 +10,7 @@ A skill is a packaged set of instructions (and optional scripts or reference fil
 
 ## Structure
 
-```
+```text
 skills/
   <skill-name>/
     SKILL.md        # name, description, and the instructions
@@ -26,8 +26,8 @@ Copy a skill folder into your assistant's skills directory (for Claude Code: `~/
 
 | Skill | What it does |
 | --- | --- |
-| [commit-message](skills/commit-message/SKILL.md) | Writes a clear git commit message for staged changes, and commits when asked |
 | [code-review](skills/code-review/SKILL.md) | Reviews a diff for correctness, security, and maintainability |
+| [commit-message](skills/commit-message/SKILL.md) | Writes a clear git commit message for staged changes, and commits when asked |
 | [debug](skills/debug/SKILL.md) | Finds a bug's root cause, fixes it, and verifies the fix |
 | [pr-description](skills/pr-description/SKILL.md) | Writes a pull request title and description from the branch, and opens the PR when asked |
 | [release-notes](skills/release-notes/SKILL.md) | Writes release notes or a changelog entry from commits and PRs |
@@ -37,14 +37,15 @@ Copy a skill folder into your assistant's skills directory (for Claude Code: `~/
 
 1. Add a new folder under `skills/` (lowercase, hyphenated, e.g. `code-review`).
 2. Write a `SKILL.md` using the [template](skills/README.md#skillmd-template). Its `name` must match the folder name.
-3. Check it: `python scripts/validate_skills.py`
-4. Add it to the table above and to [`site/src/skills.ts`](site/src/skills.ts), then rebuild the site:
+3. Add it to the table above and to [`site/src/skills.ts`](site/src/skills.ts), with the same `description` and tools as the `SKILL.md`.
+4. Check it: `python scripts/validate_skills.py`. This also fails if the table or `skills.ts` is missing the skill or has drifted from it.
+5. Rebuild the site:
 
    ```sh
    cd site && pnpm install && pnpm run build:pages
    ```
 
-5. Open a pull request. CI runs the same check.
+6. Open a pull request. CI runs the validator, type-checks and lints the site, and fails if `docs/index.html` was not rebuilt.
 
 ## License
 

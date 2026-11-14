@@ -1,38 +1,28 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+name: Skill problem
+about: A skill gives wrong, unclear, or unhelpful instructions, or is not picked up when it should be
+title: "<skill-name>: "
+labels: bug
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Skill
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+<!-- Folder name under skills/, e.g. `code-review`. -->
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## What happened
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+<!-- What you asked, and what the assistant did while following the skill. Paste the relevant output. -->
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+## What you expected
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+## Which step is wrong
 
-**Additional context**
-Add any other context about the problem here.
+<!-- Quote the line(s) in SKILL.md that caused it, if you know. -->
+
+## Environment
+
+- Assistant and version (e.g. Claude Code 2.x):
+- Model, if known:
+- How the skill was installed (`~/.claude/skills/`, project `.claude/skills/`, other):
