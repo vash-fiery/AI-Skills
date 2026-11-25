@@ -30,7 +30,23 @@ The validator has no flags and always checks every skill: frontmatter, broken re
 
 1. Create or edit `skills/<name>/SKILL.md`.
 2. Run `python scripts/validate_skills.py`.
-3. Add or update the skill's row in the **Skills** table in the root `README.md` and in `site/src/skills.ts`. The GitHub Pages site (React + shadcn/ui, VashFX Ember theme, bundled into one file) is built and deployed by `.github/workflows/pages.yml` on every push to `main` that touches `site/`; its output is not committed. Run `cd site && pnpm install && pnpm run build:pages` to check it builds and to preview `site/_site/index.html`. The validator fails if the README row or `skills.ts` entry is missing or its description has drifted. The `summary`, `title`, `group`, and `blocks` in `skills.ts` are not checked, so keep the steps in `blocks` in sync with `SKILL.md` by hand.
-4. In the PR, use `.github/pull_request_template.md` ("What this adds" plus its checklist).
+3. Add or update the skill's row in the **Skills** table in the root `README.md` and in `site/src/skills.ts`. The validator fails if the README row or `skills.ts` entry is missing or its description has drifted. The `summary`, `title`, `group`, and `blocks` in `skills.ts` are not checked, so keep the steps in `blocks` in sync with `SKILL.md` by hand.
+4. Optionally run `cd site && pnpm install && pnpm run build:pages` and open `site/_site/index.html` to preview the site. The site deploys itself after merge (see below).
+5. In the PR, use `.github/pull_request_template.md` ("What this adds" plus its checklist).
+
+## The Pages site and CI
+
+The site in `site/` is React + shadcn/ui with the VashFX Ember theme, bundled into a single `index.html`. `pnpm run build:pages` runs Parcel into `site/dist/`, then `html-inline` writes `site/_site/index.html`. Both folders are git-ignored.
+
+| Workflow | Runs on | Does |
+| --- | --- | --- |
+| `validate.yml` | every PR, push to `main` | validator; site install, `tsc -b`, lint, `build:pages` |
+| `pages.yml` (`Deploy Pages`) | push to `main` touching `site/`, or manual | `build:pages`, then deploys `site/_site` to GitHub Pages |
+| `codeql.yml` | PR and push to `main`, weekly | CodeQL for Actions, JS/TS, Python |
+
+- Never commit build output. There is no `docs/index.html` any more; the live site always comes from the latest `main` build.
+- The repo's **Settings → Pages → Source** must stay **GitHub Actions**. Switching back to "Deploy from a branch" breaks the site.
+- Tailwind is v4: the theme lives in an `@theme inline` block in `site/src/index.css` (there is no `tailwind.config.js`), and PostCSS is configured in `site/.postcssrc.json`. Site-specific classes (`ember-*`, `mono`, `icode`, `tabnum`) stay in `@layer components` so shadcn utilities can override them.
+- Dependabot updates npm packages in `/site` and the GitHub Actions in the workflows, weekly. Because nothing built is committed, these PRs pass CI without manual rebuilds.
 
 Markdown in this repo follows the `vashfx-style` skill's "Repository Markdown" rules: compact native tables, inline code for commands and paths, language tags on code fences, and blank lines around block elements.
