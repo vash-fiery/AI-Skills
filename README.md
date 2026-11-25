@@ -2,7 +2,7 @@
 
 A curated collection of reusable AI agent skills, prompts, and workflows for Claude and other AI assistants.
 
-Browse them on the site: <https://vash-fiery.github.io/AI-Skills/> (a React + shadcn/ui app in [`site/`](site/), built into [`docs/index.html`](docs/index.html)).
+Browse them on the site: <https://vash-fiery.github.io/AI-Skills/> (a React + shadcn/ui app in [`site/`](site/), built and deployed by the `Deploy Pages` workflow on every push to `main`).
 
 ## What's a skill?
 
@@ -39,13 +39,13 @@ Copy a skill folder into your assistant's skills directory (for Claude Code: `~/
 2. Write a `SKILL.md` using the [template](skills/README.md#skillmd-template). Its `name` must match the folder name.
 3. Add it to the table above and to [`site/src/skills.ts`](site/src/skills.ts), with the same `description` and tools as the `SKILL.md`.
 4. Check it: `python scripts/validate_skills.py`. This also fails if the table or `skills.ts` is missing the skill or has drifted from it.
-5. Rebuild the site:
+5. Optionally, check the site builds and preview it at `site/_site/index.html`:
 
    ```sh
    cd site && pnpm install && pnpm run build:pages
    ```
 
-6. Open a pull request. CI runs the validator, type-checks and lints the site, and fails if `docs/index.html` was not rebuilt.
+6. Open a pull request. CI runs the validator, then type-checks, lints, and builds the site. After merge, the `Deploy Pages` workflow publishes it.
 
 ## License
 
