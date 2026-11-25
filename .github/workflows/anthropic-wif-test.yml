@@ -1,11 +1,9 @@
 # .github/workflows/anthropic-wif-test.yml
 name: anthropic-wif-test
 on: push
-
 permissions:
   id-token: write
   contents: read
-
 jobs:
   call-claude:
     runs-on: ubuntu-latest
