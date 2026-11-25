@@ -1,3 +1,4 @@
+# .github/workflows/anthropic-wif-test.yml
 name: anthropic-wif-test
 on: push
 permissions:
@@ -22,7 +23,7 @@ jobs:
           {
             "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
             "assertion": "$JWT",
-            "federation_rule_id": "fdrl_014oJp1C634QL1Qa8raXe4Rp",
+            "federation_rule_id": "fdrl_01LYeYwszE3sRhh3twh2Yjqc",
             "organization_id": "869a65cc-1703-4c19-b46e-6f823496f75d",
             "service_account_id": "svac_01KgH3nS4Ttj2SietgTJVSg4",
             "workspace_id": "wrkspc_012FMQpx8NaMppP4HFy2DZui"
