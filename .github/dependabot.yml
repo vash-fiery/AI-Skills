@@ -7,11 +7,6 @@ updates:
     directory: "/site"
     schedule:
       interval: "weekly"
-    ignore:
-      # Tailwind v4 replaces the PostCSS plugin and JS config the site uses
-      # (tailwind.config, tailwindcss-animate). Migrate by hand, not by bump.
-      - dependency-name: "tailwindcss"
-        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
