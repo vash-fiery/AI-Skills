@@ -340,7 +340,7 @@ export default function App() {
               <div key="a"><h3 className="text-[0.95rem] font-semibold">Create a folder under <code className="icode">skills/</code></h3><p className="mt-0.5 text-(--viz-muted)">Lowercase and hyphenated, for example <code className="icode">code-review</code>.</p></div>,
               <div key="b"><h3 className="text-[0.95rem] font-semibold">Write the <code className="icode">SKILL.md</code></h3><p className="mt-0.5 text-(--viz-muted)">Frontmatter <code className="icode">name</code> must match the folder; <code className="icode">description</code> says when to use it. Keep each value on one line.</p></div>,
               <div key="c"><h3 className="text-[0.95rem] font-semibold">Run the check</h3><p className="mt-0.5 text-(--viz-muted)"><code className="icode">python scripts/validate_skills.py</code> prints <code className="icode">N skill(s) OK</code> or one error per problem. CI runs the same check.</p></div>,
-              <div key="d"><h3 className="text-[0.95rem] font-semibold">Open a pull request</h3><p className="mt-0.5 text-(--viz-muted)">Add a row to the README table and to <code className="icode">docs/index.html</code>, then fill in the PR template.</p></div>,
+              <div key="d"><h3 className="text-[0.95rem] font-semibold">Open a pull request</h3><p className="mt-0.5 text-(--viz-muted)">Add a row to the README table and an entry to <code className="icode">site/src/skills.ts</code>, then fill in the PR template.</p></div>,
             ]}
           />
         </Panel>
