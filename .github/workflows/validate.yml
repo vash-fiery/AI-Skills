@@ -40,9 +40,3 @@ jobs:
         run: pnpm run lint
       - name: Build the Pages site
         run: pnpm run build:pages
-      - name: Check docs/index.html is up to date
-        run: |
-          if ! git diff --quiet -- ../docs/index.html; then
-            echo "::error file=docs/index.html::docs/index.html is stale. Run 'cd site && pnpm run build:pages' and commit the result."
-            exit 1
-          fi

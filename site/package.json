@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "build:pages": "rm -rf dist && parcel build index.html --dist-dir dist --no-source-maps && html-inline dist/index.html > ../docs/index.html"
+    "build:pages": "rm -rf dist _site && parcel build index.html --dist-dir dist --no-source-maps && mkdir -p _site && html-inline dist/index.html > _site/index.html"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.5.0",
