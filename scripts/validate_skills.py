@@ -29,8 +29,8 @@ LINK_RE = re.compile(r"\]\(([^)\s]+)\)")
 README_ROW_RE = re.compile(r"^\|\s*\[([^\]]+)\]\(skills/([^/)]+)/SKILL\.md\)", re.M)
 SITE_ENTRY_RE = re.compile(
     r'^ {4}name: "([^"]+)",.*?'
-    r'^ {4}description:\s*(["\'])((?:\\.|(?!\2).)*)\2,\s*'
-    r'^ {4}tools: \[(.*?)\]',
+    r"^ {4}description:\s*([\"'])((?:\\.|(?!\2).)*)\2,\s*"
+    r"^ {4}tools: \[(.*?)\]",
     re.S | re.M,
 )
 
@@ -83,12 +83,7 @@ def check(skill_dir):
     description = fields.get("description", "")
     if not description:
         errors.append("frontmatter is missing 'description'")
-    elif description in (
-        ">",
-        "|",
-        ">-",
-        "|-",
-    ):
+    elif description in (">", "|", ">-", "|-"):
         errors.append("description must be on one line, not a YAML block scalar")
     elif len(description) > MAX_DESCRIPTION:
         errors.append(f"description is longer than {MAX_DESCRIPTION} characters")
@@ -127,10 +122,7 @@ def check_site(skills):
         name, quote, body, tools = m.groups()
         entries[name] = (
             js_string(quote, body),
-            [
-                js_string('"', tool)
-                for tool in re.findall(r'"((?:\\.|[^"\\])*)"', tools)
-            ],
+            [js_string(q, b) for q, b in re.findall(r"([\"'])((?:\\.|(?!\1).)*)\1", tools)],
         )
     for name in entries:
         if name not in skills:
