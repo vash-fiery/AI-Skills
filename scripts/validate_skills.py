@@ -122,7 +122,7 @@ def check_site(skills):
         name, quote, body, tools = m.groups()
         entries[name] = (
             js_string(quote, body),
-            [js_string(q, b) for q, b in re.findall(r"([\"'])((?:\\.|(?!\1).)*)\1", tools)],
+            [js_string(q, b) for q, b in re.findall(r"([\"'])(^_(__|[^_])+_$)\1", tools)],
         )
     for name in entries:
         if name not in skills:
