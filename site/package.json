@@ -31,7 +31,7 @@
     "oxlint": "^1.94.0",
     "parcel": "^2.16.4",
     "parcel-resolver-tspaths": "^0.0.9",
-    "postcss": "^8.5.32",
+    "postcss": "^8.5.33",
     "tailwindcss": "4.3.5",
     "typescript": "~7.0.2",
     "vite": "^8.3.8"
